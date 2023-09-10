@@ -23,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // 商品一覧取得
+        // $items = Item::all();
+
         return view('home');
     }
 }

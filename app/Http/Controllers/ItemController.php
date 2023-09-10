@@ -25,6 +25,7 @@ class ItemController extends Controller
     {
         // 商品一覧取得
         $items = Item::all();
+        $items = Item::paginate(5);
 
         return view('item.index', compact('items'));
     }
@@ -47,6 +48,10 @@ class ItemController extends Controller
                 'name' => $request->name,
                 'type' => $request->type,
                 'detail' => $request->detail,
+                'price' => $request->price,
+                'quantity' => $request->quantity,
+                'minquantity' => $request->minquantity,
+                'image' => $request->image,
             ]);
 
             return redirect('/items');
@@ -54,4 +59,120 @@ class ItemController extends Controller
 
         return view('item.add');
     }
+
+    /**
+     * 商品編集
+     */
+
+     public function itemEdit(Request $request)
+     {
+         /**
+          * idに紐づく商品データを抽出し、item.editに渡す
+          */
+         
+         $id = $request->id;
+         $user_id = \Auth::user()->name;
+ 
+         $items = \DB::table('items')->find($id);
+         
+         return view('/item/edit')->with([
+             'items' => $items,
+             'user_id' => $user_id
+         ]);
+     }
+
+     public function itemEditor(Request $request)
+    {
+        // バリデーション
+        $request->validate([
+            'name' => 'required|max:50',
+            'type' => ['required'],
+            'price' => 'required|max:10',
+            'detail' => 'required|max:400',
+            'image' => 'file|max:50|mimes:jpg,jpeg,png',
+        ],
+        [
+            'ame.required' => '品名を入力してください。',
+            'name.max' => '商品名は50字以内で設定してください',
+            'type.required' => 'カテゴリを選択してください。',
+            'price.required' => '価格は必須です。',
+            'price.max' => '価格は10桁以内で設定してください',
+            'detail.max' => '詳細情報は400文字以内で設定してください',
+            'image.max' => '50KBを超える画像は登録できません',
+            'image.mimes' => 'ファイル形式はjpg,jpeg,pngのみ登録可能です',
+
+        ]);
+    
+        $item = Item::all()->first();
+        $item->name = $request->name;
+        $item->type =$request->type;
+        $item->price =$request->price;
+        $item->detail =$request->detail;
+        $item->quantity =$request->quantity;
+        $item->minquantity =$request->minquantity;
+        if(isset($request->image)){
+            $image = base64_encode(file_get_contents($request->image->getRealPath()));
+            $items->image =$image;
+        }
+        $item->save();
+
+        return redirect('/items');
+    }
+
+    public function itemDestroyer(Request $request){
+        $item = Item::find($request->id)->delete();
+
+        return redirect('/items');
+    }
+
+    public function itemImageDestroyer(Request $request){
+        
+        $item = Item::find($request->id);
+        $item->image = NULL;
+        $item->save();
+    
+        return redirect('/items');
+    }
+
+    /**
+     * 詳細画面
+     */
+    public function detail($id, Request $request){
+        $items = Item::findOrFail($id);
+        // $keyword = $request->input('keyword');
+        // $page = $request->input('previouspage');
+        // 商品詳細画面を表示
+        return view('/item/detail',compact('items'));
+    }
+
+
+    /**
+     * 商品検索
+     */
+    public function search(Request $request){
+        //キーワード受け取り
+        $keyword = $request->input('keyword');
+        //クエリ生成
+        $query = Item::query();
+
+        //キーワードがあった場合
+        if(!empty($keyword)){
+            // 全角スペースを半角に変換
+            $spaceConversion = mb_convert_kana($keyword, 's');
+            // 単語を配列に変換
+            // $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+            foreach($wordArraySearched as $keyword) {
+            $query->where('name','like','%'.$keyword.'%');
+            $query->orWhere('type','like','%'.$keyword.'%');
+            $query->orWhere('price','like','%'.$keyword.'%');
+            $query->orWhere('detail','like','%'.$keyword.'%');
+            }
+        }
+        $items = $query->paginate(5)->withQueryString();
+
+        // 商品一覧画面を表示
+        return view('/items', compact('keyword','items'));
+    }
+
+
 }
