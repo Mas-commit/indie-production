@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
+use App\Models\User;
 
 class ItemController extends Controller
 {
@@ -26,6 +27,9 @@ class ItemController extends Controller
         // 商品一覧取得
         $items = Item::all();
         $items = Item::paginate(5);
+
+        $query = Item::query();
+        $items = $query->paginate(5)->withQueryString();
 
         return view('item.index', compact('items'));
     }
@@ -64,21 +68,24 @@ class ItemController extends Controller
      * 商品編集
      */
 
-     public function itemEdit(Request $request)
+    //  public function itemEdit(Request $request)
+    public function itemEdit($id)
      {
          /**
           * idに紐づく商品データを抽出し、item.editに渡す
           */
-         
-         $id = $request->id;
-         $user_id = \Auth::user()->name;
+        
+        // $id = $request->id;
+        $user_id = \Auth::user()->name;
  
-         $items = \DB::table('items')->find($id);
+        // $items = \DB::table('items')->find($id);
          
-         return view('/item/edit')->with([
-             'items' => $items,
-             'user_id' => $user_id
-         ]);
+        //  return view('/item/edit')->with([
+        //     'items' => $items,
+        //     'user_id' => $user_id,
+        // ]);
+        $item=Item::find($id);
+        return view('/item/edit', compact('item', 'user_id'));
      }
 
      public function itemEditor(Request $request)
@@ -92,7 +99,7 @@ class ItemController extends Controller
             'image' => 'file|max:50|mimes:jpg,jpeg,png',
         ],
         [
-            'ame.required' => '品名を入力してください。',
+            'name.required' => '品名を入力してください。',
             'name.max' => '商品名は50字以内で設定してください',
             'type.required' => 'カテゴリを選択してください。',
             'price.required' => '価格は必須です。',
@@ -102,8 +109,8 @@ class ItemController extends Controller
             'image.mimes' => 'ファイル形式はjpg,jpeg,pngのみ登録可能です',
 
         ]);
-    
-        $item = Item::all()->first();
+        $item = Item::find($request->id);
+        // $item->user_id = \Auth::id();
         $item->name = $request->name;
         $item->type =$request->type;
         $item->price =$request->price;
@@ -112,7 +119,7 @@ class ItemController extends Controller
         $item->minquantity =$request->minquantity;
         if(isset($request->image)){
             $image = base64_encode(file_get_contents($request->image->getRealPath()));
-            $items->image =$image;
+            $item->image =$image;
         }
         $item->save();
 

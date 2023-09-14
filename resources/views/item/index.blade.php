@@ -25,9 +25,11 @@
                         </div>
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
+                            @can('admin')
                             <div class="input-group-append">
                                 <a href="{{ url('items/add') }}" class="btn btn-default">商品登録</a>
                             </div>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -39,6 +41,7 @@
                                 <th>名前</th>
                                 <th>種別</th>
                                 <th>価格</th>
+                                <th>在庫数 / 必要在庫</th>
                                 <th>編集</th>
                                 <th>詳細情報</th>
                             </tr>
@@ -58,6 +61,7 @@
                                         @endif
                                     </th>
                                     <th><?php $price = $item->price; echo number_format($price);?> 円</th>
+                                    <th>{{ $item->quantity }} / {{ $item->minquantity }}</th>
                                     <th scope="col"><a href="/items/edit/{{$item->id}}"><button type="button" class="btn btn-secondary">編集</button></a></th>
                                     <th scope="col"><a href="/items/detail/{{$item->id}}"><button type="button" class="btn btn-dark">詳細</div></button></a>
                                     </th>
