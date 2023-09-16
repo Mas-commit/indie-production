@@ -49,7 +49,7 @@
                         <div class="col-md-8 mt-2">
                             <div class="card-body m-2">
                                 <a href="/searchlist/detail/{{ $items[0]->id }} " class="card-title fs-5 fw-bold text-decoration-none">{{ $items[0]->item_name }}</a>
-                                <div class="mt-2">
+                                <div class="mt-2" style="list-style: none;">
                                     <li>名称：{{ $items[0]->name }}</li>
                                     <li>登録日：{{ $items[0]->created_at->format('Y年n月j日') }}</li>
                                     <li>カテゴリ：@if($items[0]->type==1)事務機器
