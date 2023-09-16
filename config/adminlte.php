@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>備品管理システム</b>',
+    'logo' => '<b>備品管理</b>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -294,6 +294,32 @@ return [
             'text' => '備品一覧',
             'url'  => 'items',
             'icon' => 'fas fa-gamepad',
+            // 'submenu' =>[
+            //     [
+            //         'text' => '事務機器',
+            //         'url'  => 'navlink?type=1',
+            //     ],
+            //     [
+            //         'text' => 'インク・トナー・コピー用紙',
+            //         'url'  => 'items',
+            //     ],
+            //     [
+            //         'text' => 'パソコン・周辺機器',
+            //         'url'  => 'items',
+            //     ],
+            //     [
+            //         'text' => '文房具',
+            //         'url'  => 'items',
+            //     ],
+            //     [
+            //         'text' => 'オフィス家具・収納',
+            //         'url'  => 'items',
+            //     ],
+            //     [
+            //         'text' => 'その他',
+            //         'url'  => 'items',
+            //     ],
+            // ],
         ],
 
         // AdminLTEデフォルト

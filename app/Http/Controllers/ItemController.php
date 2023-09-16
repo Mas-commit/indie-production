@@ -26,7 +26,7 @@ class ItemController extends Controller
     {
         // 商品一覧取得
         $items = Item::all();
-        $items = Item::paginate(5);
+        // $items = Item::paginate(5);
 
         $query = Item::query();
         $items = $query->paginate(5)->withQueryString();
@@ -210,19 +210,46 @@ class ItemController extends Controller
             // 全角スペースを半角に変換
             $spaceConversion = mb_convert_kana($keyword, 's');
             // 単語を配列に変換
-            // $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+            
+            $matchedValues = [];
+            // $wordArraySearched　= [文房、コピー];
             foreach($wordArraySearched as $keyword) {
-            $query->where('name','like','%'.$keyword.'%');
-            $query->orWhere('type','like','%'.$keyword.'%');
-            $query->orWhere('price','like','%'.$keyword.'%');
-            $query->orWhere('detail','like','%'.$keyword.'%');
+                $query->where('name','like','%'.$keyword.'%');
+                $query->orWhere('price','like','%'.$keyword.'%');
+                $query->orWhere('detail','like','%'.$keyword.'%');
+
+                // constに定義しているtypesの文字列に部分一致するか検証して、一致するならvalue(1や2など)を$matchedValuesにつっこむ
+                $types = config("const.types");
+                foreach ($types as $value => $label) {
+                    if(strpos($label, $keyword) !==false){
+                        array_push($matchedValues, $value);
+                    };
+                }
             }
+            $query->orWhereIn( 'type', $matchedValues);
+            
         }
         $items = $query->paginate(5)->withQueryString();
 
         // 商品一覧画面を表示
-        return view('/items', compact('keyword','items'));
+        return view('item.index', compact('keyword','items'));
     }
 
+    // /navlinkで実行
+    public function navlink(Request $request){
+        //キーワード受け取り
+        $type = $request->input('type');
+        //クエリ生成
+        $query = Item::query();
 
+        //一致する種別のみを検索
+        if(!empty($type)){
+            $query->where('type','like','%'.$type.'%');
+        }
+        $items = $query->paginate(5)->withQueryString();
+
+        // 商品一覧画面を表示
+        return view('/', compact('type','items'));
+    }
 }

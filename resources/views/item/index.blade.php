@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', '商品一覧')
+@section('title', '備品一覧')
 
 @section('content_header')
-    <h1>商品一覧</h1>
+    <h1>備品一覧</h1>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 @stop
 
@@ -12,17 +12,18 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">商品一覧</h3>
+                    <h3 class="card-title">備品一覧</h3>
                     <!-- 検索機能 -->
-                        <!-- <span>商品検索：</span>
+                        <span>商品検索：</span>
                         <div style="display: inline-block; _display: block;">
                             <form method="get" action="/search" class="form-inline">
+                            {{ csrf_field() }}
                                 <div class="input-group">
                                     <input type="text" name="keyword" class="form-control" style="max-width:400px;" value="@if (isset( $keyword )) {{request()->keyword}} @endif" placeholder="キーワードを入力">
                                     <input type="submit" value="検索" class="btn btn-secondary">
                                 </div>
                             </form>
-                        </div> -->
+                        </div>
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
                             @can('admin')
@@ -45,9 +46,9 @@
                                 @can('admin')
                                 <th>編集</th>
                                 @endcan
-                                @can('general')
+                                <!-- @can('general')
                                 <th>在庫数編集</th>
-                                @endcan
+                                @endcan -->
                                 <th>詳細情報</th>
                             </tr>
                         </thead>
@@ -57,22 +58,18 @@
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }}</td>
                                     <th>
-                                        @if($item->type==1)事務機器
-                                        @elseif($item->type==2)インク・トナー・コピー用紙
-                                        @elseif($item->type==3)パソコン・周辺機器
-                                        @elseif($item->type==4)文房具
-                                        @elseif($item->type==5)オフィス家具・収納
-                                        @elseif($item->type==6)その他
-                                        @endif
+                                        @foreach(config('const.types') as $value => $label)
+                                        {{ $item->type == $value ? $label : ""}}
+                                        @endforeach
                                     </th>
                                     <th><?php $price = $item->price; echo number_format($price);?> 円</th>
                                     <th>{{ $item->quantity }} / {{ $item->minquantity }}</th>
                                     @can('admin')
                                     <th scope="col"><a href="/items/edit/{{$item->id}}"><button type="button" class="btn btn-secondary">編集</button></a></th>
                                     @endcan
-                                    @can('general')
+                                    <!-- @can('general')
                                     <th scope="col"><a href="/items/qtyedit/{{$item->id}}"><button type="button" class="btn btn-secondary">編集</button></a></th>
-                                    @endcan
+                                    @endcan -->
                                     <th scope="col"><a href="/items/detail/{{$item->id}}"><button type="button" class="btn btn-dark">詳細</div></button></a>
                                     </th>
                                 </tr>
