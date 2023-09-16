@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', '商品登録')
+@section('title', '備品登録')
 
 @section('content_header')
-    <h1>商品登録</h1>
+    <h1>備品登録</h1>
 @stop
 
 @section('content')
@@ -20,7 +20,7 @@
             @endif
 
             <div class="card card-primary">
-                <form method="POST">
+                <form class="input-area text-left mt-4" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -63,7 +63,6 @@
 
                         <div class="form-group"> 
                             <label for="image">画像</label>
-                            <!-- <input type="file" name="image" id="image" accept="image/jpeg, image/png"> -->
                             <input type="file" name="image" id="image" class="form-control" accept="image/jpeg, image/png">
                         </div>
                     </div>

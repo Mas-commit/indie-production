@@ -42,21 +42,38 @@ class ItemController extends Controller
         // POSTリクエストのとき
         if ($request->isMethod('post')) {
             // バリデーション
-            $this->validate($request, [
-                'name' => 'required|max:100',
-            ]);
+        $request->validate([
+            'name' => 'required|max:50',
+            'type' => ['required'],
+            'price' => 'required|max:10',
+            'detail' => 'required|max:400',
+            'image' => 'file|max:50|mimes:jpg,jpeg,png',
+        ],
+        [
+            'name.required' => '品名を入力してください。',
+            'name.max' => '商品名は50字以内で設定してください',
+            'type.required' => 'カテゴリを選択してください。',
+            'price.required' => '価格は必須です。',
+            'price.max' => '価格は10桁以内で設定してください',
+            'detail.max' => '詳細情報は400文字以内で設定してください',
+            'image.max' => '50KBを超える画像は登録できません',
+            'image.mimes' => 'ファイル形式はjpg,jpeg,pngのみ登録可能です',
+        ]);
 
             // 商品登録
-            Item::create([
-                'user_id' => Auth::user()->id,
-                'name' => $request->name,
-                'type' => $request->type,
-                'detail' => $request->detail,
-                'price' => $request->price,
-                'quantity' => $request->quantity,
-                'minquantity' => $request->minquantity,
-                'image' => $request->image,
-            ]);
+            $item = new Item();
+            $item->user_id = \Auth::id();
+            $item->name = $request->name;
+            $item->type =$request->type;
+            $item->price =$request->price;
+            $item->detail =$request->detail;
+            $item->quantity =$request->quantity;
+            $item->minquantity =$request->minquantity;
+            if(isset($request->image)){
+            $image = base64_encode(file_get_contents($request->image->getRealPath()));
+            $item->image =$image;
+            }
+            $item->save();
 
             return redirect('/items');
         }
@@ -107,10 +124,9 @@ class ItemController extends Controller
             'detail.max' => '詳細情報は400文字以内で設定してください',
             'image.max' => '50KBを超える画像は登録できません',
             'image.mimes' => 'ファイル形式はjpg,jpeg,pngのみ登録可能です',
-
         ]);
         $item = Item::find($request->id);
-        // $item->user_id = \Auth::id();
+        $item->user_id = \Auth::id();
         $item->name = $request->name;
         $item->type =$request->type;
         $item->price =$request->price;
@@ -141,6 +157,33 @@ class ItemController extends Controller
         return redirect('/items');
     }
 
+    /**
+     * 在庫数量編集
+     */
+    public function qtyEdit(Request $request)
+     {
+         /**
+          * idに紐づく商品データを抽出し、item.qtyeditに渡す
+          */
+            // POSTリクエストのとき
+            if ($request->isMethod('post')) {
+                $item = Item::find($request->id);
+                $item->user_id = \Auth::id();
+                $item->name = $request->name;
+                $item->type =$request->type;
+                $item->price =$request->price;
+                $item->detail =$request->detail;
+                $item->quantity =$request->quantity;
+                $item->minquantity =$request->minquantity;
+                $item->save();
+
+                return redirect('/items');
+            }
+            $user_id = \Auth::user()->name;
+            $item=Item::find($id);
+        return view('/item/qtyedit', compact('item', 'user_id'));
+     }
+        
     /**
      * 詳細画面
      */

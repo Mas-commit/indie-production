@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @extends('adminlte::page')
-    @section('title', '商品登録')
+    @section('title', '備品編集')
 </head>
 
 @section('content_header')
-    <h1>商品編集</h1>
+    <h1>備品編集</h1>
 @stop
 
 @section('content')
@@ -32,7 +32,7 @@
                 <input type="hidden" name="id" value="{{$item->id}}">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="name">品名</label>
+                            <label for="name">名称</label>
                             <input type="text" class="form-control" id="name" value="{{ old('name',$item->name) }}" name="name" placeholder="品名">
                         </div>
 
@@ -55,7 +55,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="quantity">数量</label>
+                            <label for="quantity">在庫数量</label>
                             <input type="text" class="form-control" id="quantity" value="{{ old('quantity',$item->quantity) }}" name="quantity" placeholder="在庫数量に入庫数量を足した値を入力">
                         </div>
 
@@ -69,16 +69,34 @@
                             <textarea name="detail" id="detail" cols="30" rows="10" class="form-control">{{ old('detail',$item->detail) }}</textarea>
                         </div>
 
-                        <div class="form-group"> 
+                        <div> 
                             <label for="image">画像</label>
-                            <input type="file" name="image" id="image" class="form-control" accept="image/jpeg, image/png">
+                            <div class="image-view">
+                                @if(isset($item->image))
+                                <img src="data:image/png;base64, {{ $item->image }}" alt="画像" class="img-fluid">
+                                @else
+                                <p>画像は登録されていません</p>
+                                @endif
+                                <input type="file" name="image" id="image" class="form-control" accept="image/jpeg, image/png">
+                            </div>
                         </div>
                     </div>
-
                     <div class="card-footer">
                         <button type="submit" class="btn btn-secondary">編集確定</button>
                     </div>
                 </form>
+                <div class="container" style="display: flex; margin: 0px 10px; text-align:right;">
+                <form class="mt-3" action="{{ url('items/imagedelete') }}" method="POST" style="text-align:right; margin: 0px 10px;">
+                {{ csrf_field() }}
+                    <input type="hidden" name="id" value="{{ $item->id }}" >
+                    <button class="btn btn-danger">画像を削除する</button>
+                </form>
+                <form class="text-center mt-3" action="{{ url('items/itemdelete') }}" method="POST" style="text-align:right; margin: 0px 10px;">
+                {{ csrf_field() }}
+                    <input type="hidden" name="id" value="{{ $item->id }}" >
+                    <button class="btn btn-danger">備品を削除する</button>
+                </form>
+                </div>
             </div>
         </div>
     </div>

@@ -5,15 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @extends('adminlte::page')
-    @section('title', '詳細画面')
+    @section('title', '備品詳細')
     @section('content_header')
+        <h1>備品詳細</h1>
     @stop
 
-    <title>商品詳細画面</title>
+    <title>備品詳細画面</title>
 </head>
 <body>
 @section('content')
-    <div class="container" style="margin-top: 40px;">
+    <div class="container" style="margin-top: 5px;">
         <div class="row">
             <div class="col-4">
                 @if(isset($items->image))
@@ -40,7 +41,7 @@
                 <div class="border-bottom border-secondary" style="max-width: 500px;">
                     【　商品情報　】<br>
                     <ul style="list-style: none;">
-                        <li>種別：@if($items->type==1)事務機器
+                        <li>カテゴリ：@if($items->type==1)事務機器
                                 @elseif($items->type==2)インク・トナー・コピー用紙
                                 @elseif($items->type==3)パソコン・周辺機器
                                 @elseif($items->type==4)文房具

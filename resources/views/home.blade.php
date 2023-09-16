@@ -11,23 +11,26 @@
 
     @extends('adminlte::page')
 
-    @section('title', 'Dashboard')
+    @section('title', '備品管理システム_TOP')
 
 </head>
 
 <body>
     @section('content_header')
-        <h1>Dashboard</h1>
+
+        <h1><img src="vendor/adminlte/dist/img/AdminLTELogo.png" alt="" style="width:40px; height:40px;"> 備品管理システム</h1>
     @stop
     @section('content')
-        <p>Welcome to this beautiful admin panel.</p>
+        <p>現在の備品の情報や在庫の確認ができます</p>
 
 <!-- 新規登録品表示 -->
 <div class="container" style="display: flex; margin: 10px 0; border: 1px solid;">
     <div class="contents1" style="margin: 5px; padding: 20px 10px;">
         <div class="row">
             <div class="col-lg-5">
-                <h6><span class=text-secondary>▶︎</span> 更新情報</h6>
+                <div class="card-header">
+                    <h6 class="card-title"><span class=text-secondary>▶︎</span> 更新情報</h6>
+                </div>
                 <div class="card border-light" style="width: 40em;">
                     <div class="row g-0">
                         @if ($items->count() == 0)
@@ -38,16 +41,16 @@
 
                             <!-- データベースの画像を表示 -->
                             @if(isset($items[0]->image))
-                            <img width="128" height="128" src="data:image/jpeg;base64, {{ $items[0]->image }}" alt=""/>
+                            <img width="128" height="128" src="data:image/jpeg;base64, {{ $items[0]->image }}" alt="" style="margin-left: 40px;">
                             @else
-                            <img width="128" height="128" src="/images/noimage.jpg" alt=""/>
+                            <img width="128" height="128" src="/images/noimage.jpg" alt="">
                             @endif   
                         </div>
                         <div class="col-md-8 mt-2">
                             <div class="card-body m-2">
                                 <a href="/searchlist/detail/{{ $items[0]->id }} " class="card-title fs-5 fw-bold text-decoration-none">{{ $items[0]->item_name }}</a>
                                 <div class="mt-2">
-                                    <li>名前：{{ $items[0]->name }}</li>
+                                    <li>名称：{{ $items[0]->name }}</li>
                                     <li>登録日：{{ $items[0]->created_at->format('Y年n月j日') }}</li>
                                     <li>カテゴリ：@if($items[0]->type==1)事務機器
                                                     @elseif($items[0]->type==2)インク・トナー・コピー用紙
@@ -66,8 +69,12 @@
                 </div>
             </div>
         </div>
+
+
         <div class="col-lg-7">
-            <h6><span class=text-secondary>▶︎</span> 新着一覧</h6>
+            <div class="card-header">
+                <h6 class="card-title"><span class=text-secondary>▶︎</span> 新着一覧</h6>
+            </div>
             <table class="table table-sm" style="width: 40em;">
                 <thead>
                     <tr>
@@ -78,7 +85,6 @@
                         <th scope="col" class="fw-normal text-secondary">在庫数</th>
                     </tr>
                 </thead>
-            
                 <tbody>
                     @if ($items->count() == 0)
                     @else
@@ -104,8 +110,21 @@
             </table>
         </div>
     </div>
+
+
     <div class="contents2" style="margin: 5px; padding: 20px 10px;">
-        <h6><span class=text-secondary>▶︎</span> お知らせ</h6>
+        <div class="card-header">
+            <h6 class="card-title"><span class=text-secondary>▶︎</span> お知らせ</h6>
+            <div class="card-tools">
+                <div class="input-group input-group-sm">
+                    @can('admin')
+                    <div class="input-group-append">
+                        <a href="{{ url('notificationadd') }}" class="btn btn-default">お知らせ登録</a>
+                    </div>
+                    @endcan
+                </div>
+            </div>
+        </div>
         <div class="card border-light" style="width: 25em;">
             <div class="card-body m-2">
                 <div class="row">
@@ -114,12 +133,15 @@
                     @else
                     @foreach($notifications as $notification)
                         <tr>
-                            <td>{{ $notification->created_at->format('Y.n.j') }}</td>
-                            <td>{{$notification->id}}
-                            @can('admin')
-                            <a href="/notification/{{$notification->id}}">編集</a>
-                            @endcan
-                            </td>
+                            <div class="border-bottom border-secondary" style="max-width: 500px;">
+                                <td>{{ $notification->created_at->format('Y.n.j') }}</td><br>
+                                <td>{{ $notification->notification }}</td>
+                                <td>
+                                    @can('admin')
+                                    <a href="/notification/{{$notification->id}}">>>編集</a>
+                                    @endcan
+                                </td>
+                            </div>
                         </tr>
                     @endforeach
                     @endif

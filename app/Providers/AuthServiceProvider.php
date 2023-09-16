@@ -25,7 +25,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // 一般ユーザー以上に許可
-        Gate::define('user', function ($user) {
+        Gate::define('general', function ($user) {
         return ($user->role >= 1 && $user->role <= 10);
         });
         // 管理者以上に許可
