@@ -88,13 +88,13 @@
                 <div class="container" style="display: flex; margin: 0px 10px; text-align:right;">
                     <form class="mt-3" action="{{ url('items/imagedelete') }}" method="POST" style="text-align:right;">
                         @csrf
-                        <input type="hidden" name="id" value="{{ $item->id }}" >
-                        <button class="btn btn-danger">画像を削除する</button>
+                        <input type="hidden" name="id" value="{{ $item->id }}">
+                        <button class="btn btn-danger" onclick='return confirm("画像を削除しますか？")'>画像を削除する</button>
                     </form>
                     <form class="text-center mt-3" action="{{ url('items/itemdelete') }}" method="POST" style="text-align:right; margin: 0px 10px;">
                         @csrf
                         <input type="hidden" name="id" value="{{ $item->id }}" >
-                        <button class="btn btn-danger">備品を削除する</button>
+                        <button class="btn btn-danger" onclick='return confirm("備品情報を削除しますか？")'>備品を削除する</button>
                     </form>
                 </div>
 

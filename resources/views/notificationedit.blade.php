@@ -33,7 +33,7 @@
     <form class="text-center mt-3" action="{{ url('notificationdelete') }}" method="POST" style="text-align:right;">
         @csrf
         <input type="hidden" name="id" value="{{ $notification->id }}" >
-        <button class="btn btn-danger">お知らせを削除する</button>
+        <button class="btn btn-danger" onclick='return confirm("このお知らせを削除しますか？")'>お知らせを削除する</button>
     </form>
     </div>
 @stop
