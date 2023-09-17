@@ -40,7 +40,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>名前</th>
+                                <th>名称</th>
                                 <th>種別</th>
                                 <th>価格</th>
                                 <th>在庫数 / 必要在庫</th>

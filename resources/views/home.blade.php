@@ -60,7 +60,7 @@
                                                     @elseif($items[0]->type==6)その他
                                                 @endif</li>
                                     <li>価格：{{ number_format($items[0]->price) }}円</li>
-                                    <li>数量：{{ $items[0]->quantity}}</li>
+                                    <li>在庫数：{{ $items[0]->quantity}}</li>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                 <thead>
                     <tr>
                         <th scope="col" class="fw-normal text-secondary">登録日</th>
-                        <th scope="col" class="fw-normal text-secondary">品名</th>
+                        <th scope="col" class="fw-normal text-secondary">名称</th>
                         <th scope="col" class="fw-normal text-secondary">カテゴリ</th>
                         <th scope="col" class="fw-normal text-secondary">価格</th>
                         <th scope="col" class="fw-normal text-secondary">在庫数</th>
