@@ -25,7 +25,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">名前</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="名前">
+                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" placeholder="名前">
                         </div>
 
                         <div class="form-group">
@@ -43,17 +43,17 @@
 
                         <div class="form-group">
                             <label for="price">単価</label>
-                            <input type="text" class="form-control" id="price" name="price" placeholder="単価">
+                            <input type="text" class="form-control" id="price" name="price" value="{{ old('price') }}" placeholder="単価">
                         </div>
 
                         <div class="form-group">
                             <label for="quantity">数量</label>
-                            <input type="text" class="form-control" id="quantity" name="quantity" placeholder="在庫数量に入庫数量を足した値を入力">
+                            <input type="text" class="form-control" id="quantity" name="quantity" value="{{ old('quantity') }}" placeholder="在庫数量に入庫数量を足した値を入力">
                         </div>
 
                         <div class="form-group">
                             <label for="minquantity">必要在庫数量</label>
-                            <input type="text" class="form-control" id="minquantity" name="minquantity" placeholder="最低限必要な在庫数量を入力">
+                            <input type="text" class="form-control" id="minquantity" name="minquantity" value="{{ old('minquantity') }}" placeholder="最低限必要な在庫数量を入力">
                         </div>
 
                         <div class="form-group">

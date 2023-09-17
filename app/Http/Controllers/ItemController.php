@@ -46,7 +46,9 @@ class ItemController extends Controller
             'name' => 'required|max:50',
             'type' => ['required'],
             'price' => 'required|max:10',
-            'detail' => 'required|max:400',
+            'detail' => 'max:400',
+            'quantity' => 'required|max:6',
+            'minquantity' => 'required|max:6',
             'image' => 'file|max:50|mimes:jpg,jpeg,png',
         ],
         [
@@ -58,6 +60,10 @@ class ItemController extends Controller
             'detail.max' => '詳細情報は400文字以内で設定してください',
             'image.max' => '50KBを超える画像は登録できません',
             'image.mimes' => 'ファイル形式はjpg,jpeg,pngのみ登録可能です',
+            'quantity.required' => '在庫数を入力してください',
+            'quantity.max' => '在庫数は6桁以内で入力してください',
+            'minquantity.required' => '必要在庫数を設定してください',
+            'minquantity.max' => '必要在庫数は6桁以内で入力してください',
         ]);
 
             // 商品登録
@@ -112,7 +118,9 @@ class ItemController extends Controller
             'name' => 'required|max:50',
             'type' => ['required'],
             'price' => 'required|max:10',
-            'detail' => 'required|max:400',
+            'detail' => 'max:400',
+            'quantity' => 'required|max:6',
+            'minquantity' => 'required|max:6',
             'image' => 'file|max:50|mimes:jpg,jpeg,png',
         ],
         [
@@ -124,6 +132,10 @@ class ItemController extends Controller
             'detail.max' => '詳細情報は400文字以内で設定してください',
             'image.max' => '50KBを超える画像は登録できません',
             'image.mimes' => 'ファイル形式はjpg,jpeg,pngのみ登録可能です',
+            'quantity.required' => '在庫数を入力してください',
+            'quantity.max' => '在庫数は6桁以内で入力してください',
+            'minquantity.required' => '必要在庫数を設定してください',
+            'minquantity.max' => '必要在庫数は6桁以内で入力してください',
         ]);
         $item = Item::find($request->id);
         $item->user_id = \Auth::id();
