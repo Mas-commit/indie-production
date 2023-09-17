@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => '商品管理',
+    'title' => '備品管理',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -293,33 +293,43 @@ return [
         [
             'text' => '備品一覧',
             'url'  => 'items',
-            'icon' => 'fas fa-gamepad',
-            // 'submenu' =>[
-            //     [
-            //         'text' => '事務機器',
-            //         'url'  => 'navlink?type=1',
-            //     ],
-            //     [
-            //         'text' => 'インク・トナー・コピー用紙',
-            //         'url'  => 'items',
-            //     ],
-            //     [
-            //         'text' => 'パソコン・周辺機器',
-            //         'url'  => 'items',
-            //     ],
-            //     [
-            //         'text' => '文房具',
-            //         'url'  => 'items',
-            //     ],
-            //     [
-            //         'text' => 'オフィス家具・収納',
-            //         'url'  => 'items',
-            //     ],
-            //     [
-            //         'text' => 'その他',
-            //         'url'  => 'items',
-            //     ],
-            // ],
+            'icon' => 'fas fa-archive',
+        ],
+        [
+            'text' => 'カテゴリ',
+            'icon' => 'fas fa-bars',
+            'submenu' =>[
+                [
+                    'text' => '事務機器',
+                    'url'  => 'navlink?type=1',
+                    'icon' => 'fas fa-fax nav-icon',
+                ],
+                [
+                    'text' => 'インク・トナー・コピー用紙',
+                    'url'  => 'navlink?type=2',
+                    'icon' => 'fas fa-print nav-icon',
+                ],
+                [
+                    'text' => 'パソコン・周辺機器',
+                    'url'  => 'navlink?type=3',
+                    'icon' => 'fas fa-desktop nav-icon',
+                ],
+                [
+                    'text' => '文房具',
+                    'url'  => 'navlink?type=4',
+                    'icon' => 'fas fa-eraser nav-icon',
+                ],
+                [
+                    'text' => 'オフィス家具・収納',
+                    'url'  => 'navlink?type=5',
+                    'icon' => 'fas fa-suitcase nav-icon',
+                ],
+                [
+                    'text' => 'その他',
+                    'url'  => 'navlink?type=6',
+                    'icon' => 'fas fa-plus-square nav-icon',
+                ],
+            ],
         ],
 
         // AdminLTEデフォルト

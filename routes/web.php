@@ -23,6 +23,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::prefix('items')->group(function () {
     Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
+    Route::post('/', [App\Http\Controllers\ItemController::class, 'index']);
     Route::get('/add', [App\Http\Controllers\ItemController::class, 'add']);
     Route::post('/add', [App\Http\Controllers\ItemController::class, 'add']);
     Route::get('/edit/{id}',[App\Http\Controllers\ItemController::class, 'itemEdit']);
@@ -34,10 +35,14 @@ Route::prefix('items')->group(function () {
     Route::post('/itemdelete',[App\Http\Controllers\ItemController::class,'itemDestroyer']);
 });
 
-Route::get('/notification/{id}',[App\Http\Controllers\HomeController::class, 'notificationEdit']);
-Route::post('/notification/editor',[App\Http\Controllers\HomeController::class,'notificationEditor']);
+Route::prefix('notification')->group(function () {
+Route::get('/{id}',[App\Http\Controllers\HomeController::class, 'notificationEdit']);
+Route::post('/editor',[App\Http\Controllers\HomeController::class,'notificationEditor']);
+});
+
 Route::get('/notificationadd', [App\Http\Controllers\HomeController::class, 'notificationAdd']);
 Route::post('/notificationadd', [App\Http\Controllers\HomeController::class, 'notificationAdd']);
+Route::post('/notificationdelete', [App\Http\Controllers\HomeController::class, 'notificationDestroyer']);
 
 Route::get('/search', [App\Http\Controllers\ItemController::class, 'search']);
 Route::get('/navlink', [App\Http\Controllers\ItemController::class, 'navlink']);

@@ -3,8 +3,10 @@
 @section('title', '備品一覧')
 
 @section('content_header')
+<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+<div class="border-bottom">
     <h1>備品一覧</h1>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+</div>
 @stop
 
 @section('content')
@@ -13,21 +15,20 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">備品一覧</h3>
-                    <!-- 検索機能 -->
-                        <span>商品検索：</span>
-                        <div style="display: inline-block; _display: block;">
-                            <form method="get" action="/search" class="form-inline">
-                            {{ csrf_field() }}
-                                <div class="input-group">
-                                    <input type="text" name="keyword" class="form-control" style="max-width:400px;" value="@if (isset( $keyword )) {{request()->keyword}} @endif" placeholder="キーワードを入力">
-                                    <input type="submit" value="検索" class="btn btn-secondary">
-                                </div>
-                            </form>
-                        </div>
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
+                            <!-- 検索機能 -->
+                            <div class="input-group-append" style="display: inline-block; _display: block;" >
+                                <form method="get" action="/search" class="form-inline">
+                                    {{ csrf_field() }}
+                                    <div class="input-group" style=" width:375px;">
+                                        <input type="text" name="keyword" class="form-control" value="@if (isset( $keyword )) {{request()->keyword}} @endif" placeholder="キーワードを入力">
+                                        <input type="submit" value="検索" class="btn btn-secondary">
+                                    </div>
+                                </form>
+                            </div>
                             @can('admin')
-                            <div class="input-group-append">
+                            <div class="input-group-append" style="margin-left:40px;">
                                 <a href="{{ url('items/add') }}" class="btn btn-default">備品登録</a>
                             </div>
                             @endcan

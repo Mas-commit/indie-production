@@ -27,7 +27,6 @@
 
             <div class="card card-primary">
                 <form class="input-area text-left mt-4" action="{{ url('items/editor') }}" method="POST" enctype="multipart/form-data">
-                {{ csrf_field() }}
                 @csrf
                 <input type="hidden" name="id" value="{{$item->id}}">
                     <div class="card-body">
@@ -73,7 +72,7 @@
                             <label for="image">画像</label>
                             <div class="image-view">
                                 @if(isset($item->image))
-                                <img src="data:image/png;base64, {{ $item->image }}" alt="画像" class="img-fluid">
+                                <img src="data:image/png;base64, {{ $item->image }}" alt="画像" class="img-fluid" style="max-width: 50%;">
                                 @else
                                 <p>画像は登録されていません</p>
                                 @endif
@@ -85,18 +84,20 @@
                         <button type="submit" class="btn btn-secondary">編集確定</button>
                     </div>
                 </form>
+
                 <div class="container" style="display: flex; margin: 0px 10px; text-align:right;">
-                <form class="mt-3" action="{{ url('items/imagedelete') }}" method="POST" style="text-align:right; margin: 0px 10px;">
-                {{ csrf_field() }}
-                    <input type="hidden" name="id" value="{{ $item->id }}" >
-                    <button class="btn btn-danger">画像を削除する</button>
-                </form>
-                <form class="text-center mt-3" action="{{ url('items/itemdelete') }}" method="POST" style="text-align:right; margin: 0px 10px;">
-                {{ csrf_field() }}
-                    <input type="hidden" name="id" value="{{ $item->id }}" >
-                    <button class="btn btn-danger">備品を削除する</button>
-                </form>
+                    <form class="mt-3" action="{{ url('items/imagedelete') }}" method="POST" style="text-align:right;">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $item->id }}" >
+                        <button class="btn btn-danger">画像を削除する</button>
+                    </form>
+                    <form class="text-center mt-3" action="{{ url('items/itemdelete') }}" method="POST" style="text-align:right; margin: 0px 10px;">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $item->id }}" >
+                        <button class="btn btn-danger">備品を削除する</button>
+                    </form>
                 </div>
+
             </div>
         </div>
     </div>

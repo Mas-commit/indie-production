@@ -219,7 +219,7 @@ class ItemController extends Controller
                 $query->orWhere('price','like','%'.$keyword.'%');
                 $query->orWhere('detail','like','%'.$keyword.'%');
 
-                // constに定義しているtypesの文字列に部分一致するか検証して、一致するならvalue(1や2など)を$matchedValuesにつっこむ
+                // constに定義しているtypesの文字列に部分一致するか検証し、一致するならvalue(1や2など)を$matchedValuesへ
                 $types = config("const.types");
                 foreach ($types as $value => $label) {
                     if(strpos($label, $keyword) !==false){
@@ -250,6 +250,6 @@ class ItemController extends Controller
         $items = $query->paginate(5)->withQueryString();
 
         // 商品一覧画面を表示
-        return view('/', compact('type','items'));
+        return view('item.index', compact('type','items'));
     }
 }

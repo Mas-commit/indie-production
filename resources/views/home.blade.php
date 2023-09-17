@@ -21,7 +21,7 @@
         <h1><img src="vendor/adminlte/dist/img/AdminLTELogo.png" alt="" style="width:40px; height:40px;"> 備品管理システム</h1>
     @stop
     @section('content')
-        <p>現在の備品の情報や在庫の確認ができます</p>
+        <p>備品の情報や在庫の確認ができます</p>
 
 <!-- 新規登録品表示 -->
 <div class="container" style="display: flex; margin: 10px 0; border: 1px solid;">
