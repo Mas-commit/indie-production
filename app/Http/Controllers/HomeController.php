@@ -74,6 +74,7 @@ class HomeController extends Controller
             ],
             [
                 'notification.max' => 'お知らせは200文字以内で設定してください',
+                'notification.required' => 'お知らせを入力してください',
             ]);
 
             // お知らせ登録
@@ -107,11 +108,12 @@ class HomeController extends Controller
      public function notificationEditor(Request $request)
     {
         // バリデーション
-        $request->validate([
+        $this->validate($request, [
             'notification' => 'required|max:200',
         ],
         [
             'notification.max' => 'お知らせは200文字以内で設定してください',
+            'notification.required' => 'お知らせを入力してください',
         ]);
         $notification = Notification::find($request->id);
         $notification->notification=$request->notification;

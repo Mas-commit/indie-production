@@ -48,8 +48,8 @@
                                 @elseif($items->type==5)オフィス家具・収納
                                 @elseif($items->type==6)その他
                                 @endif</li>
-                        <li>商品登録日：@if(!empty($items->created_at)) {{$items->created_at->format('Y年 n月 j日 h時 m分')}} @else 未登録 @endif</li>
-                        <li>商品更新日：@if(!empty($items->updated_at)) {{$items->updated_at->format('Y年 n月 j日 h時 m分')}} @else 未登録 @endif</li>
+                        <li>備品登録日：@if(!empty($items->created_at)) {{$items->created_at->format('Y年 n月 j日 h時 m分')}} @else 未登録 @endif</li>
+                        <li>備品更新日：@if(!empty($items->updated_at)) {{$items->updated_at->format('Y年 n月 j日 h時 m分')}} @else 未登録 @endif</li>
                     </ul>
                 </div><br>
                 <div class="border-bottom border-secondary" style="max-width: 500px;">
