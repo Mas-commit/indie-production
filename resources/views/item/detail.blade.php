@@ -58,7 +58,7 @@
                         <li>{{$items->detail}}</li>
                     </ul>
                 </div><br>
-                <a href="/items" class="link-secondary">商品一覧へ戻る</a>
+                <a href="/items" class="link-secondary">備品一覧へ戻る</a>
             </div>
         </div>
     </div>
