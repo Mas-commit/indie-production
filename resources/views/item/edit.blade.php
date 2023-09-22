@@ -54,12 +54,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="quantity">在庫数量</label>
+                            <label for="quantity">在庫数</label>
                             <input type="text" class="form-control" id="quantity" value="{{ old('quantity',$item->quantity) }}" name="quantity" placeholder="在庫数量に入庫数量を足した値を入力">
                         </div>
 
                         <div class="form-group">
-                            <label for="minquantity">必要在庫数量</label>
+                            <label for="minquantity">必要在庫数</label>
                             <input type="text" class="form-control" id="minquantity" value="{{ old('minquantity',$item->minquantity) }}" name="minquantity" placeholder="最低限必要な在庫数量を入力">
                         </div>
 
