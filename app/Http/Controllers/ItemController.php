@@ -45,10 +45,10 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required|max:50',
             'type' => ['required'],
-            'price' => 'required|max:10',
+            'price' => 'required|max_digits:9|numeric',
             'detail' => 'max:400',
-            'quantity' => 'required|max:6',
-            'minquantity' => 'required|max:6',
+            'quantity' => 'required|numeric|max_digits:6',
+            'minquantity' => 'required|numeric|max_digits:6',
             'image' => 'file|max:50|mimes:jpg,jpeg,png',
         ],
         [
@@ -56,14 +56,17 @@ class ItemController extends Controller
             'name.max' => '商品名は50字以内で設定してください',
             'type.required' => 'カテゴリを選択してください。',
             'price.required' => '価格は必須です。',
-            'price.max' => '価格は10桁以内で設定してください',
+            'price.max_digits' => '価格は9桁以内で設定してください',
+            'price.numeric' => '価格は半角数字で設定してください',
             'detail.max' => '詳細情報は400文字以内で設定してください',
             'image.max' => '50KBを超える画像は登録できません',
             'image.mimes' => 'ファイル形式はjpg,jpeg,pngのみ登録可能です',
             'quantity.required' => '在庫数を入力してください',
-            'quantity.max' => '在庫数は6桁以内で入力してください',
+            'quantity.max_digits' => '在庫数は6桁以内で入力してください',
+            'quantity.numeric' => '在庫数は半角数字で設定してください',
             'minquantity.required' => '必要在庫数を設定してください',
-            'minquantity.max' => '必要在庫数は6桁以内で入力してください',
+            'minquantity.max_digits' => '必要在庫数は6桁以内で入力してください',
+            'minquantity.numeric' => '必要在庫数は半角数字で設定してください',
         ]);
 
             // 商品登録
@@ -117,10 +120,10 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required|max:50',
             'type' => ['required'],
-            'price' => 'required|max:10',
+            'price' => 'required|max_digits:9|numeric',
             'detail' => 'max:400',
-            'quantity' => 'required|max:6',
-            'minquantity' => 'required|max:6',
+            'quantity' => 'required|max_digits:6|numeric',
+            'minquantity' => 'required|max_digits:6|numeric',
             'image' => 'file|max:50|mimes:jpg,jpeg,png',
         ],
         [
@@ -128,14 +131,17 @@ class ItemController extends Controller
             'name.max' => '商品名は50字以内で設定してください',
             'type.required' => 'カテゴリを選択してください。',
             'price.required' => '価格は必須です。',
-            'price.max' => '価格は10桁以内で設定してください',
+            'price.max_digits' => '価格は9桁以内で設定してください',
+            'price.numeric' => '価格は半角数字で設定してください',
             'detail.max' => '詳細情報は400文字以内で設定してください',
             'image.max' => '50KBを超える画像は登録できません',
             'image.mimes' => 'ファイル形式はjpg,jpeg,pngのみ登録可能です',
             'quantity.required' => '在庫数を入力してください',
-            'quantity.max' => '在庫数は6桁以内で入力してください',
+            'quantity.max_digits' => '在庫数は6桁以内で入力してください',
+            'quantity.numeric' => '在庫数は半角数字で設定してください',
             'minquantity.required' => '必要在庫数を設定してください',
-            'minquantity.max' => '必要在庫数は6桁以内で入力してください',
+            'minquantity.max_digits' => '必要在庫数は6桁以内で入力してください',
+            'minquantity.numeric' => '必要在庫数は半角数字で設定してください',
         ]);
         $item = Item::find($request->id);
         $item->user_id = \Auth::id();
