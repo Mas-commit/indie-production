@@ -233,7 +233,7 @@ class ItemController extends Controller
             $matchedValues = [];
             // $wordArraySearched　= [文房、コピー];
             foreach($wordArraySearched as $keyword) {
-                $query->where('name','like','%'.$keyword.'%');
+                $query->orWhere('name','like','%'.$keyword.'%');
                 $query->orWhere('price','like','%'.$keyword.'%');
                 $query->orWhere('detail','like','%'.$keyword.'%');
 
@@ -245,8 +245,9 @@ class ItemController extends Controller
                     };
                 }
             }
+            if (!empty($matchedValues)) {
             $query->orWhereIn( 'type', $matchedValues);
-            
+            };
         }
         $items = $query->paginate(5)->withQueryString();
 
